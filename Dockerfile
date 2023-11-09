@@ -6,6 +6,6 @@ RUN go mod download
 RUN go build -o /app cmd/test-application/main.go
 
 #копируем собранное приложение в новый образ
-FROM alpine:stable
-COPY --from=build main /bin/main
-ENTRYPOINT ["/bin/main"]
+FROM alpine
+COPY --from=build app /bin/app
+ENTRYPOINT ["/bin/app"]

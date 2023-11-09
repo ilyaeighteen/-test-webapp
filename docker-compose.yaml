@@ -1,17 +1,21 @@
 version: "2.2"
 services:
+#приложение
     golang-app:
         container_name: app
         build: ./
         ports:
-            - "3000:3000"
+            - "8080:8080"
 
         #передаем конфиг в контейнер
         volumes:
             - "./cfg:/var/opt/config"
         restart: always
+        networks:
+            - backend_mco
+#база
     postgres:
-        image: postgres:stable
+        image: postgres:latest
         container_name: db_app
         environment:
           POSTGRES_DB: "app"
@@ -23,3 +27,8 @@ services:
             - /var/opt/db/:/var/lib/postgresql/data
         ports:
           - "127.0.0.1:5432:5432"
+        networks:
+            - backend_mco
+networks:	
+  backend_mco:
+    name: backend_mco
