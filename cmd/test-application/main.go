@@ -22,9 +22,9 @@ func main() {
 	// Инициализация базы данных PostgreSQL
 	var err error
 	connStr := "postgres://" + config.Config.DB_USER + ":" + config.Config.DB_PASSWD + "@" + config.Config.DB_HOST + ":" + config.Config.DB_PORT + "/" + config.Config.DB + "?sslmode=disable"
-	log.Println(connStr)
-	db, err = sql.Open("postgres", connStr)
+	db, err = sql.Open("postgres", connStr )
 	if err != nil {
+		log.Fatal(connStr)
 		log.Fatal(err)
 	}
 	defer db.Close()
