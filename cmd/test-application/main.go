@@ -21,7 +21,7 @@ var db *sql.DB
 func main() {
 	// Инициализация базы данных PostgreSQL
 	var err error
-	connStr := "postgres://" + config.Config.DB_USER + ":" + config.Config.DB_PASSWD + "@" + config.Config.DB_HOST + ":" + config.Config.DB_PORT + "/" + config.Config.DB + "?sslmode=disable"
+	connStr := "postgres://" + config.Config.DB_USER + ":" + config.Config.DB_PASSWD + "@postgres" +  "/" + config.Config.DB + "?sslmode=disable"
 	db, err = sql.Open("postgres", connStr )
 	if err != nil {
 		log.Fatal(connStr)
