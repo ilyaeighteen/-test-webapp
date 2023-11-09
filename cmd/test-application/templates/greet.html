@@ -4,11 +4,11 @@
     <title>Приветствие</title>
 </head>
 <body>
-    <h1>Добро пожаловать, {{ .users.0.Name }}!</h1>
+    <h1>Добро пожаловать, {{ .name }}!</h1>
     <h2>Последние 5 пользователей:</h2>
     <ul>
         {{ range .users }}
-            <li>{{ .Name }} ({{ .CreatedAt.Format "2000-01-01 01:01:01" }})</li>
+            <li>{{ .Name }} ({{ .CreatedAt.Format "2006-01-02 15:04:05" }})</li>
         {{ end }}
     </ul>
 </body>

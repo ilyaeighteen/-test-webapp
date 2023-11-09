@@ -5,7 +5,8 @@ import (
 	"log"
 	"net/http"
 	"time"
-	"test-application/v1.0.0/v2/cmd/test-application/config"
+
+	//"test-application/v1.0.0/v2/cmd/test-application/config"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -16,12 +17,14 @@ type User struct {
 	CreatedAt time.Time
 }
 
+
 var db *sql.DB
+var current_user string
 
 func main() {
 	// Инициализация базы данных PostgreSQL
 	var err error
-	connStr := "postgres://" + config.Config.DB_USER + ":" + config.Config.DB_PASSWD + "@" + config.Config.DB_HOST + ":" + config.Config.DB_PORT + "/" + config.Config.DB + "?sslmode=disable"
+	connStr := "postgres://" + "db_user" + ":" + "1234" + "@" + "localhost" + ":" + "5432" + "/" + "app" + "?sslmode=disable"
 	db, err = sql.Open("postgres", connStr )
 	if err != nil {
 		log.Fatal(connStr)
@@ -31,18 +34,19 @@ func main() {
 
 	// Создание экземпляра Gin-приложения
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
 
 	// Маршрут для отображения главной страницы
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "templates/index.html", nil)
+		c.HTML(http.StatusOK, "index.html", nil)
 	})
 
 	// Маршрут для обработки данных пользователя
 	r.POST("/greet", func(c *gin.Context) {
-		name := c.PostForm("name")
+		current_user = c.PostForm("name")
 
 		// Записываем пользователя в базу данных
-		_, err := db.Exec("INSERT INTO users (name) VALUES ($1)", name)
+		_, err := db.Exec("INSERT INTO app.users (name) VALUES ($1)", current_user)
 		if err != nil {
 			log.Println(err)
 			c.String(http.StatusInternalServerError, "Ошибка при записи в базу данных")
@@ -58,7 +62,8 @@ func main() {
 		}
 
 		// Отправляем список пользователей на страницу
-		c.HTML(http.StatusOK, "templates/greet.html", gin.H{
+		c.HTML(http.StatusOK, "greet.html", gin.H{
+			"name": current_user,
 			"users": users,
 		})
 	})
@@ -69,7 +74,7 @@ func main() {
 
 func getUsers() ([]User, error) {
 	// Запрос к базе данных для получения последних 5 пользователей
-	rows, err := db.Query("SELECT id, name, created_at FROM users ORDER BY created_at DESC LIMIT 5")
+	rows, err := db.Query("SELECT name, created_at FROM app.users ORDER BY created_at DESC LIMIT 5")
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +84,7 @@ func getUsers() ([]User, error) {
 	var users []User
 	for rows.Next() {
 		var user User
-		err := rows.Scan(&user.ID, &user.Name, &user.CreatedAt)
+		err := rows.Scan(&user.Name, &user.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
