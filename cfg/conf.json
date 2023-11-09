@@ -1,5 +1,5 @@
 {
-        "db_host": "postgres",
+        "db_host": "217.18.60.218",
         "db_port": "5432",
         "db": "app",
         "db_user": "db_user",

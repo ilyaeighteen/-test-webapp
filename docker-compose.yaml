@@ -9,6 +9,7 @@ services:
 
         #передаем конфиг в контейнер
         volumes:
+            - "./cmd/templates:/bin/templates"
             - "./cfg:/var/opt/config"
         restart: always
         networks:
@@ -23,7 +24,7 @@ services:
           POSTGRES_PASSWORD: "1234"
           PGDATA: "/var/lib/postgresql/data/pgdata"
         volumes:
-            - ./initdb:/docker-entrypoint-initdb.d
+            - ./init_db:/docker-entrypoint-initdb.d
             - /var/opt/db/:/var/lib/postgresql/data
         ports:
           - "127.0.0.1:5432:5432"

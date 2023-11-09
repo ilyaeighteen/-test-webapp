@@ -24,7 +24,7 @@ var current_user string
 func main() {
 	// Инициализация базы данных PostgreSQL
 	var err error
-	connStr := "postgres://" + "db_user" + ":" + "1234" + "@" + "localhost" + ":" + "5432" + "/" + "app" + "?sslmode=disable"
+	connStr := "postgres://" + "db_user" + ":" + "1234" + "@" + "postgres" + ":" + "5432" + "/" + "app" + "?sslmode=disable"
 	db, err = sql.Open("postgres", connStr )
 	if err != nil {
 		log.Fatal(connStr)
