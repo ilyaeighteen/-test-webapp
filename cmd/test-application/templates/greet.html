@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Приветствие</title>
+</head>
+<body>
+    <h1>Добро пожаловать, {{ .users.0.Name }}!</h1>
+    <h2>Последние 5 пользователей:</h2>
+    <ul>
+        {{ range .users }}
+            <li>{{ .Name }} ({{ .CreatedAt.Format "2000-01-01 01:01:01" }})</li>
+        {{ end }}
+    </ul>
+</body>
+</html>
