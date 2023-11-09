@@ -1,0 +1,25 @@
+version: "2.2"
+services:
+    golang-app:
+        container_name: app
+        build: ./
+        ports:
+            - "3000:3000"
+
+        #передаем конфиг в контейнер
+        volumes:
+            - "./cfg:/var/opt/config"
+        restart: always
+    postgres:
+        image: postgres:stable
+        container_name: db_app
+        environment:
+          POSTGRES_DB: "app"
+          POSTGRES_USER: "db_user"
+          POSTGRES_PASSWORD: "1234"
+          PGDATA: "/var/lib/postgresql/data/pgdata"
+        volumes:
+            - ./initdb:/docker-entrypoint-initdb.d
+            - /var/opt/db/:/var/lib/postgresql/data
+        ports:
+          - "127.0.0.1:5432:5432"
