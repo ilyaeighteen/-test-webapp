@@ -34,11 +34,11 @@ func main() {
 
 	// Создание экземпляра Gin-приложения
 	r := gin.Default()
-	r.LoadHTMLGlob("templates/*")
+	//r.LoadHTMLGlob("templates/*")
 
 	// Маршрут для отображения главной страницы
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
+		c.HTML(http.StatusOK, "templates/index.html", nil)
 	})
 
 	// Маршрут для обработки данных пользователя
@@ -62,7 +62,7 @@ func main() {
 		}
 
 		// Отправляем список пользователей на страницу
-		c.HTML(http.StatusOK, "greet.html", gin.H{
+		c.HTML(http.StatusOK, "templates/greet.html", gin.H{
 			"name": current_user,
 			"users": users,
 		})
