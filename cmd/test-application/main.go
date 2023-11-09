@@ -27,19 +27,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.Close()
-
-	// Создание таблицы пользователей, если ее нет
-	_, err = db.Exec(`
-		CREATE TABLE IF NOT EXISTS users (
-			id SERIAL PRIMARY KEY,
-			name TEXT,
-			created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
-		)
-	`)
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	
 	// Создание экземпляра Gin-приложения
 	r := gin.Default()
 
