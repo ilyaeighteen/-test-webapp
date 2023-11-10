@@ -2,10 +2,12 @@ package main
 
 import (
 	"database/sql"
+	//"fmt"
 	"log"
 	"net/http"
-	"time"
 	"test-application/v1.0.0/v2/cmd/test-application/config"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -26,7 +28,6 @@ func main() {
 	connStr := "postgres://" + config.Config.DB_USER + ":" + config.Config.DB_PASSWD + "@" + config.Config.DB_HOST + ":" + config.Config.DB_PORT + "/" + config.Config.DB + "?sslmode=disable"
 	db, err = sql.Open("postgres", connStr )
 	if err != nil {
-		log.Fatal(connStr)
 		log.Fatal(err)
 	}
 	defer db.Close()
@@ -48,6 +49,7 @@ func main() {
 		_, err := db.Exec("INSERT INTO app.users (name) VALUES ($1)", current_user)
 		if err != nil {
 			log.Println(err)
+			log.Println(connStr)
 			c.String(http.StatusInternalServerError, "Ошибка при записи в базу данных")
 			return
 		}

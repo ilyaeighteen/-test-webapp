@@ -19,7 +19,8 @@ type appConfig struct {
 
 // перечитываем файл конфигурации
 func ReloadConfig() error {
-	absolute_path := "/var/opt/config"
+	absolute_path := "C:/Users/Ilya Gulyaev/go/src/test-webapp/cfg"
+	//absolute_path := "/var/opt/config"
 	if config_err := LoadConfig(absolute_path); config_err != nil {
 		logs.WithFields(logs.Fields{
 			"ReloadConfig": "Open file",
