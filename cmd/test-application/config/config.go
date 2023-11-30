@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+//go:generate mockgen -source=main.go -destination=mocks/mock.go
+
 var Config appConfig
 
 // определяем новый тип для хранения конфигурации, при добавлении новых параметров необходим переопределять!!!

@@ -56,7 +56,7 @@ func main() {
 		}
 
 		// Получаем последних 5 пользователей из базы данных
-		users, err := getUsers()
+		users, err := GetUsers()
 		if err != nil {
 			log.Println(err)
 			c.String(http.StatusInternalServerError, "Ошибка при чтении из базы данных")
@@ -74,9 +74,9 @@ func main() {
 	r.Run(":8080")
 }
 
-func getUsers() ([]User, error) {
+func GetUsers() ([]User, error) {
 	// Запрос к базе данных для получения последних 5 пользователей
-	rows, err := db.Query("SELECT name, created_at FROM app.users ORDER BY created_at DESC LIMIT 5")
+	rows, err := db.Query("SELECT name, created_at FROM + app.users ORDER BY created_at DESC LIMIT 5")
 	if err != nil {
 		return nil, err
 	}
